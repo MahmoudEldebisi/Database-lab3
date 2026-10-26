@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Books <a class="btn" href="{{ url_for('add_book') }}">+ Add book</a></h2>
+<table>
+  <tr><th>Cover</th><th>ID</th><th>Title</th><th>Price</th><th>author_id</th><th>Actions</th></tr>
+  {% for b in books %}
+  <tr>
+    <td>{% if image_url('book', b.book_id) %}<img class="thumb" src="{{ image_url('book', b.book_id) }}">{% endif %}</td>
+    <td>{{ b.book_id }}</td>
+    <td>{{ b.title }}</td>
+    <td>{{ b.price }}</td>
+    <td>{{ b.author_id }}</td>
+    <td>
+      <a class="btn" href="{{ url_for('edit_book', book_id=b.book_id) }}">Edit</a>
+      <form class="inline" method="post" action="{{ url_for('delete_book', book_id=b.book_id) }}"
+            onsubmit="return confirm('Remove this book?');">
+        <button class="btn danger">Remove</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}<tr><td colspan="6">No books yet.</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Authors <a class="btn" href="{{ url_for('add_author') }}">+ Add author</a></h2>
+<table>
+  <tr><th>Photo</th><th>ID</th><th>Name</th><th>Country</th><th>Actions</th></tr>
+  {% for a in authors %}
+  <tr>
+    <td>{% if image_url('author', a.author_id) %}<img class="thumb" src="{{ image_url('author', a.author_id) }}">{% endif %}</td>
+    <td>{{ a.author_id }}</td>
+    <td>{{ a.name }}</td>
+    <td>{{ a.country }}</td>
+    <td>
+      <a class="btn" href="{{ url_for('edit_author', author_id=a.author_id) }}">Edit</a>
+      <form class="inline" method="post" action="{{ url_for('delete_author', author_id=a.author_id) }}"
+            onsubmit="return confirm('Remove this author AND all of his/her books?');">
+        <button class="btn danger">Remove</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}<tr><td colspan="5">No authors yet.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

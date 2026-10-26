@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ 'Edit' if author else 'Add' }} author</h2>
+<form method="post" enctype="multipart/form-data">
+  <label>Name</label>
+  <input name="name" required maxlength="100" value="{{ author.name if author else '' }}">
+  <label>Country</label>
+  <input name="country" maxlength="50" value="{{ author.country if author else '' }}">
+  <label>Photo (optional)</label>
+  <input name="image" type="file" accept="image/*">
+  <p><button class="btn">Save</button> <a class="btn" href="{{ url_for('index') }}">Cancel</a></p>
+</form>
+{% endblock %}

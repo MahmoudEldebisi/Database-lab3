@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ 'Edit' if book else 'Add' }} book</h2>
+<form method="post" enctype="multipart/form-data">
+  <label>Title</label>
+  <input name="title" required maxlength="150" value="{{ book.title if book else '' }}">
+  <label>Price</label>
+  <input name="price" type="number" step="0.01" min="0" required value="{{ book.price if book else '' }}">
+  <label>Author</label>
+  <select name="author_id" required>
+    {% for a in authors %}
+    <option value="{{ a.author_id }}" {{ 'selected' if book and book.author_id == a.author_id }}>
+      {{ a.author_id }} – {{ a.name }}
+    </option>
+    {% endfor %}
+  </select>
+  <label>Cover image (optional)</label>
+  <input name="image" type="file" accept="image/*">
+  <p><button class="btn">Save</button> <a class="btn" href="{{ url_for('index') }}">Cancel</a></p>
+</form>
+{% endblock %}
